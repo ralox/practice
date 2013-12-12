@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#just take in some params and shit em back out
+P1="$1"
+P2="$2"
+P3="$3"
+P4="$4"
+P5="$5"
+
+
+echo "there are $# parameters provided."
+
+echo "the first three are $P1, $P2, and $P3."
+echo "the last two are $P4, and $P5."
+echo "is there a 6th?  it would be $6."
+
