@@ -18,3 +18,14 @@ def count_digits(digits):
 	return len(digits)
 
 print count_digits(1234567890)
+
+
+def areEqual(var1, var2):
+	try:
+		return var1.upper() == var2.upper()
+	except AttributeError:
+		return var1 == var2
+
+
+print "Jedi is the same as jedi? ",areEqual("jedi", "Jedi")	
+
