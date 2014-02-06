@@ -104,7 +104,7 @@ checkbee = "bee" in wordy #should be true
 checkant = "ant" in wordy #should be false
 splitter = wordy.split(',') #creates a list using the comma as a delimeter
 joiner = ",".join(mylist) #brings the strings together into one big fucking string with commas in it
-striper = wordy.strip("corn,") #remove 'corn,' from the string
+striper = wordy.strip("onrclabp, ") #remove the characters from the beginning and the end of the string
 substituter = "I'm going to add %s and %s to this sentence" % ("one word", "then another") #should do what it says 
 
 print "Example string: ", wordy
@@ -112,19 +112,27 @@ print "does this string contain 'bee'...expect True: ", checkbee
 print "does the same string contain 'ant'...expect False: ", checkant
 print "split the aforementioned string into a list: ", splitter
 print "take my list of pals and jam it into a single string: ", joiner
-print "take the word 'corn' out of the junk string: ", striper
+print "take the characters [cornapbl, ] of each end of the string: ", striper
 print substituter
 
 
 # File Manipulation
 #--------------------------------------------------
 exampleFile = open('example.txt', 'r') #open the file in read mode
-exampleFile.close()
 copyFile = open('copy.txt', 'w') #create a new file in write mode
-copyFile.write("just a line of text") #make a copy?
+copyFile.write(exampleFile.read()) #make a copy of the example file
+exampleFile.close() 
 copyFile.close()
 copyFile = open('copy.txt', 'r')
 print copyFile.read()
 copyFile.close()
-# copyFile.write("I think this should overwrite the existing text and leave just this line.")
+copyFile = open('copy.txt', 'w')
+copyFile.write("The Star Wars text has been overwritten.")
+copyFile.close()
+copyFile = open('copy.txt', 'a') #open the file in append mode
+copyFile.write("Append this line.")
+copyFile.close()
+copyFile = open('copy.txt', 'r')
+print copyFile.read()
+copyFile.close()
 
