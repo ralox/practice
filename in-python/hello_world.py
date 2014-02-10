@@ -22,24 +22,8 @@ resval = dosomemath(baseval)
 print "Replacing 4 with",baseval,"results in",resval
 
 
-# perform a count
-#--------------------------------------------------
-def count_digits(digits):
-	digits=str(digits)
-	return len(digits)
-
-print "The result is",count_digits(resval),"digits long."
-
-
 # compare values
 #--------------------------------------------------
-def areEqual(var1, var2):
-	try:
-		return var1.upper() == var2.upper()
-	except AttributeError:
-		return var1 == var2
-
-print "Jedi is the same as jedi? ",areEqual("jedi", "Jedi")	
 
 
 # Lists
@@ -78,11 +62,7 @@ print "factorial of 4 is:",factorial(4)
 print "put your thang down, flip it and reverse it:",reverse(mylist)
 print "minimums are:",min(mylist),"and",min(intlist)
 print "maximums are:",max(mylist),"and",max(intlist)
-
-
-# Sorting
-#--------------------------------------------------
-print "sort pals alphabetically: ", mylist.sort() # just rearranges the list
+print "sort pals alphabetically: ", mylist.sort() # rearranges the list alphabetically or numerically
 print "copy my pals list and sorty it: ", sorted(mylist) # creates a sorted COPY of the list
 
 
@@ -92,12 +72,15 @@ def defaultValues(x=1,z=5):
 	#by default, x is 1 and z is 5
 	temp = (x** 2) * z - z 
 	return temp
-
+def multiUse(x):
+	x = x * x
+	return x
+print map(multiUse, range(6)) #map = run a function over each list element, passing the elements as arguments
 print defaultValues()
 print defaultValues(x=3,z=10)
 
 
-# String Exploration
+# String
 #--------------------------------------------------
 wordy = "corn, beef, hash, pablo"
 checkbee = "bee" in wordy #should be true
@@ -106,7 +89,17 @@ splitter = wordy.split(',') #creates a list using the comma as a delimeter
 joiner = ",".join(mylist) #brings the strings together into one big fucking string with commas in it
 striper = wordy.strip("onrclabp, ") #remove the characters from the beginning and the end of the string
 substituter = "I'm going to add %s and %s to this sentence" % ("one word", "then another") #should do what it says 
+def count_digits(digits):
+	digits=str(digits)
+	return len(digits)
+def areEqual(var1, var2):
+	try:
+		return var1.upper() == var2.upper()
+	except AttributeError:
+		return var1 == var2
 
+print "Jedi is the same as jedi? ",areEqual("jedi", "Jedi")	
+print "The result is",count_digits(resval),"digits long."
 print "Example string: ", wordy
 print "does this string contain 'bee'...expect True: ", checkbee
 print "does the same string contain 'ant'...expect False: ", checkant
@@ -135,4 +128,21 @@ copyFile.close()
 copyFile = open('copy.txt', 'r')
 print copyFile.read()
 copyFile.close()
+
+
+# Dictionaries
+#--------------------------------------------------
+dictionary1 = {"jon":"Sneoux","jeff":"Skez","dave":"Ralox","family":"Solar"}
+for key, value in dictionary1.items(): print key, value  #print everything via a for loop
+#print dictionary1.keys() #would print all of the keys
+#print dictionary1.values() #would print all of the values
+print dictionary1["jeff"] + " was the first of the " + dictionary1["family"] + " family"
+print dictionary1.get("tyler", "That name was not found") #will print the default answer because 'tyler' is not in the dictionary
+print dictionary1.get("dave", "That name was not found") #will print Ralox because 'dave' is in the dictionary
+#dictionary1.setdefault("That name was not found") #would do the same as the line above
+#ALL global and local variables are stored in dictionaries
+print globals() #within a smaller context, use locals()
+
+
+
 
