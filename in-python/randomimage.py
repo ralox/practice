@@ -9,17 +9,23 @@ import argparse
 import os 
 import os.path
 import urllib
+import webbrowser
 
 
 parseArg = argparse.ArgumentParser(description = 'Grab a random image based upon a random word')
-parseArg.add_argument("--------do this part------")
-		
+parseArg.add_argument("-se", "--selenium", help="Should the script use selenium to access the browser?", action="store_true", type=bool)
+args = parseArg.parse_args()
+
 # want to perform the actions in the browser itself if the script is told to use selenium
 # otherwise (default) I will go ahead and grab all content without the browser's help
 
 def readSite(url):
 	"""Get the contents of the given url"""
-	return urllib.urlopen(url) 
+	if ( args.selenium = false):
+		return urllib.urlopen(url)
+	else:
+		webbrowser.open(url) #don't know yet if I need to open a new browser or use an existing one...
+	
 
 
 def parseRandomWord(siteContent):
@@ -53,5 +59,5 @@ def pwd(rel = "."):
 
 
 
-webpage = readSite("http://barnett.cc")
-print webpage.headers
+webpage1 = readSite("http://barnett.cc")
+print webpage1.headers
