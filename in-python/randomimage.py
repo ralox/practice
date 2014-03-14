@@ -9,36 +9,47 @@ import argparse
 import os 
 import os.path
 import urllib
+import urlparse
 import webbrowser
+import mechanize
+from bs4 import BeautifulSoup  # currently using the html5lib parser due to trouble installing lxml
+
+browser = mechanize.Browser()
+browser.set_handle_robots(False)
+browser.addheaders = [('User-agent','chrome')]
 
 
-parseArg = argparse.ArgumentParser(description = 'Grab a random image based upon a random word')
-parseArg.add_argument("-se", "--selenium", help="Should the script use selenium to access the browser?", action="store_true", type=bool)
-args = parseArg.parse_args()
-
+# parseArg = argparse.ArgumentParser(description = 'Grab a random image based upon a random word')
+# parseArg.add_argument("-se", "--selenium", help="Should the script use selenium to access the browser?", action="store_true")
+# args = parseArg.parse_args()
+#--try this selenium stuff later--
 # want to perform the actions in the browser itself if the script is told to use selenium
 # otherwise (default) I will go ahead and grab all content without the browser's help
 
-def readSite(url):
-	"""Get the contents of the given url"""
-	if ( args.selenium = false):
-		return urllib.urlopen(url)
-	else:
-		webbrowser.open(url) #don't know yet if I need to open a new browser or use an existing one...
+
+def getRandomWord():
+	"""
+	Pull a random word from wordgenerator.net
+	"""
+	# www.wordgenerator.net/random-word-generator.php
+	# plain text (not the <p>) within <strong id="rname">
 	
+	soup = BeautifulSoup(browser.open("www.wordgenerator.net/random-word-generator.php"))
+	searchText = soup.strong
+	searchText = searchText.replace(" ","+")  # google replaces spaces in a search term with +
 
 
-def parseRandomWord(siteContent):
-	"""Pull the random word from the contents of the readSite run"""
+def grabImage(searchText): 
+	"""
+	Pull the first image from a google image search
+	"""
+	# https://www.google.com/search?site=imghp&tbm=isch&source=hp&biw=956&bih=1074&q=<searchText>&oq=<searchText>
+	
+	# <div class="rg_di" data-ri="0">
+	#	<a>
+	#		<img class="rg_i">
 
-
-def grabImage(siteContent) 
-	"""Pull the image from the contents of the readSite run"""
-
-
-
-
-
+	query = "https://www.google.com/search?site=imghp&tbm=isch&source=hp&biw=956&bih=1074&q="+searchText+"&oq="+searchText
 
 
 def pwd(rel = "."):
@@ -46,7 +57,7 @@ def pwd(rel = "."):
 	if (rel == ".") or (rel == "current"):
 		return os.getcwd()
 	elif (rel == "..") or (rel == "previous"):
-		targetdir = os.getcwd() #get the current working directory
+		targetdir = os.getcwd() # get the current working directory
 		targetdir = targetdir.split("/")
 		targetdir = targetdir[0:-1] #remove the last leg of the directory
 		parentdir = targetdir[0]
@@ -59,5 +70,6 @@ def pwd(rel = "."):
 
 
 
-webpage1 = readSite("http://barnett.cc")
-print webpage1.headers
+soup = BeautifulSoup(browser.open("www.wordgenerator.net/random-word-generator.php").read())
+searchText = soup.strong
+print searchText
