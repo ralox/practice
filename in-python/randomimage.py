@@ -9,7 +9,8 @@ import re
 import argparse
 import os 
 import os.path
-import image
+import datetime
+#import Image   # I can't get this fucking module to install...
 import urllib
 import urlparse
 import webbrowser
@@ -43,9 +44,6 @@ def getRandomWord():
 def findImage(searchText): 
 	"""Pull the first image from a google image search"""
 	# https://www.google.com/search?site=imghp&tbm=isch&source=hp&biw=956&bih=1074&q=<searchText>&oq=<searchText>
-	# <div class="rg_di" data-ri="0">
-	#	<a>
-	#		<img class="rg_i">
 
 	query = "http://www.google.com/search?site=imghp&tbm=isch&q="+searchText
 	page = BeautifulSoup(br.open(query).read())
@@ -55,11 +53,20 @@ def findImage(searchText):
 	img_source = links[0].find('img')['src']
 	return img_source
 
-
-def saveFile(rawFile):
+def saveFile(fileUrl):
 	"""Save a given file to the current working directory"""
-	
-
+	try:
+		timeString = str(datetime.datetime.now())
+		timeString = timeString.replace("-","")
+		timeString = timeString.replace(":","")
+		timeString = timeString.replace(" ","_")
+		timeString = timeString.replace(".","")
+		fileName = os.path.join(os.getcwd(), ("RImg-"+timeString+".png"))
+		br.retrieve(fileUrl, fileName)
+	except (mechanize.HTTPError,mechanize.URLError) as e:
+		print "There was an problem getting the file from its source. The given URL was: " + fileUrl
+		pass
+	return fileName
 
 def pwd(rel = "."):
 	"""print the current working directory or its parent directory"""
@@ -76,6 +83,9 @@ def pwd(rel = "."):
 	else:
 		raise ValueError("Valid Args: '.','..','current','previous'")
 
-print getRandomWord()
-print findImage('hulk')
-print findImage(getRandomWord())
+
+saveFile(findImage(getRandomWord()))
+#imagePath = (saveFile(findImage(getRandomWord())))
+#image = Image.open(imagePath)
+#image.show()
+
