@@ -10,7 +10,7 @@ import argparse
 import os 
 import os.path
 import datetime
-#import Image   # I can't get this fucking module to install...
+from PIL import Image # using 'pillow' rather than pil 
 import urllib
 import urlparse
 import webbrowser
@@ -53,6 +53,7 @@ def findImage(searchText):
 	img_source = links[0].find('img')['src']
 	return img_source
 
+
 def saveFile(fileUrl):
 	"""Save a given file to the current working directory"""
 	try:
@@ -67,6 +68,7 @@ def saveFile(fileUrl):
 		print "There was an problem getting the file from its source. The given URL was: " + fileUrl
 		pass
 	return fileName
+
 
 def pwd(rel = "."):
 	"""print the current working directory or its parent directory"""
@@ -84,8 +86,11 @@ def pwd(rel = "."):
 		raise ValueError("Valid Args: '.','..','current','previous'")
 
 
-saveFile(findImage(getRandomWord()))
-#imagePath = (saveFile(findImage(getRandomWord())))
-#image = Image.open(imagePath)
-#image.show()
+imagePath = (saveFile(findImage(getRandomWord())))
+try:
+	image = Image.open(imagePath)
+	image.show()
+except:
+	print "Could not find the image at: " + imagePath
+
 
